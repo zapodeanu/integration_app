@@ -36,7 +36,7 @@ import os
 from urllib3.exceptions import InsecureRequestWarning  # for insecure https warnings
 from requests.auth import HTTPBasicAuth  # for Basic Auth
 
-from config import JIRA_URL, JIRA_EMAIL, JIRA_PROJECT
+from config import JIRA_URL, JIRA_EMAIL
 
 
 load_dotenv('environment.env')
@@ -61,7 +61,6 @@ def get_customer_issues(issue_number):
     response = requests.get(url, auth=JIRA_AUTH, headers=header)
     print(response.status_code)
     response_json = response.json()
-    pprint(response_json)
     return response_json
 
 

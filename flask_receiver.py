@@ -27,23 +27,20 @@ __version__ = "0.1.0"
 __copyright__ = "Copyright (c) 2022 Cisco and/or its affiliates."
 __license__ = "Cisco Sample Code License, Version 1.1"
 
-import requests
-import urllib3
-from flask import Flask, request, abort
-import sys
-import json
 import datetime
+import json
 import os
 import time
-from flask_basicauth import BasicAuth
+
+import urllib3
 from dotenv import load_dotenv
-
-import jira_apis
-
+from flask import Flask, request, abort, send_from_directory
+from flask_basicauth import BasicAuth
 from urllib3.exceptions import InsecureRequestWarning  # for insecure https warnings
 
+import jira_apis
 from config import DNAC_URL
-from config import JIRA_URL, JIRA_EMAIL, JIRA_PROJECT
+from config import JIRA_EMAIL, JIRA_PROJECT
 
 os.environ['TZ'] = 'America/Los_Angeles'  # define the timezone for PST
 time.tzset()  # adjust the timezone, more info https://help.pythonanywhere.com/pages/SettingTheTimezone/
@@ -88,7 +85,6 @@ def webhook():
 
         # print the received notification
         print('Payload: ')
-        pprint(request_json)
 
         # save as a file, create new file if not existing, append to existing file, full details of each notification
         with open('all_webhooks_detailed.log', 'a') as filehandle:
